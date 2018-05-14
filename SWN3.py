@@ -1,5 +1,6 @@
 from sys import *
 import re
+import nltk
 
 class SWN3(object):
 	_dict = {}
@@ -10,7 +11,7 @@ class SWN3(object):
 			in_file = open(self._pathToSWN,"r")
 			line = ""
 			while True:
-				in_line = in_file.readline(in_file)
+				in_line = in_file.readline()
 				if not in_line:
 					break
 				data = line.split("\t")
@@ -26,14 +27,14 @@ class SWN3(object):
 							for i in range[len(v),index]:
 								v.add(0.0)
 						v.add(index,score)
-						_temp.put(w_n[0],v)
+						_temp.update(w_n[0],v)
 					else:
 						for i in range[0, index]:
 							v.add(0.0)
 						v.add(index,score)
-						_temp.put(w_n[0],v)
+						_temp.update(w_n[0],v)
 
-			temp = _temp.keySet()
+			temp = _temp.keys()
 			for word in temp:
 				v = _temp.get(word)
 				score = 0.0
@@ -48,17 +49,17 @@ class SWN3(object):
 				score /= sum
 			else:
 				score = 0.0
-			SWN3._dict.put(word,score)
+			SWN3._dict.update(word,score)
 			in_file.close()
 		except IOError:
 			print("Error in SWN3")
 
-	def classifyreview(tagged):
+	def classifyreview(self,tagged):
 		total = 0
 		totalScore = 0
 		averageScore = 0
 		i = 0
-		tokenizer = StringTokenizer(tagged)
+		tokenizer = nltk.word_tokenize(tagged)
 		for word in tokenizer:
 			if re.search(word,"(.*)/V(.*)"):
 				all_words = word.split("/")
@@ -66,7 +67,7 @@ class SWN3(object):
 					word = all_words[0] + "#v"
 					if SWN3._dict.get(word) != None:
 						total = SWN3._dict.get(word) + total
-						if SWN3._dict.get(word) != 0
+						if SWN3._dict.get(word) != 0:
 							i = i+1
 
 				else:
@@ -83,7 +84,7 @@ class SWN3(object):
 					word = all_words[0] + "#a"
 					if SWN3._dict.get(word) != None:
 						total = SWN3._dict.get(word) + total
-						if SWN3._dict.get(word) != 0
+						if SWN3._dict.get(word) != 0:
 							i = i+1
 
 				else:
@@ -100,7 +101,7 @@ class SWN3(object):
 					word = all_words[0] + "#r"
 					if SWN3._dict.get(word) != None:
 						total = SWN3._dict.get(word) + total
-						if SWN3._dict.get(word) != 0
+						if SWN3._dict.get(word) != 0:
 							i = i+1
 
 				else:
@@ -122,7 +123,7 @@ class SWN3(object):
 		try:
 			in_file = open ("/usr/share/dict/american-english","r")
 			while True:
-				in_line = in_file.readline(in_file)
+				in_line = in_file.readline()
 				if not in_line:
 					break
 				if in_line.indexOf(word) != -1 :
@@ -134,9 +135,8 @@ class SWN3(object):
 
 
 	def preprocessing(self,str):
-		str.replaceAll("(.)\\1{1,}", "$1")
+		return str.replaceAll("(.)\\1{1,}", "$1")
+
 	def main(self):
 		print(self.check_for_word("hai"))
 
-
-print(SWN3.check_for_word(SWN3(),"super"))
