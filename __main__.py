@@ -1,5 +1,5 @@
 from sys import *
-from sys import *
+import re
 class Main(object):
 	_product_name = ""
 	_rating = 0.0
