@@ -1,25 +1,23 @@
-from sys import *
+class DataSet:
+    __pathtoreviewset =  "/home/satya/dm_project/src/data/amazon_mp3"
 
-class DataSet(object):
-    __pathtoreviewset = ""
-    def __int__(self):
-        self__pathtoreviewset = "/home/hduser1/workspace/dm_project/src/data/amazon_mp3"
-    def calAverageRating(self,name):
+    def calAverageRating( self ,name):
         normalise = 0.0
         try:
-            in_file= open(self.__pathtoreviewset,"r")
+            name = name + "\n"
+            in_file = open(self.__pathtoreviewset,"r")
             line = ""
             i = 0
             dummy = ""
             rating = 0.0
             while True:
-                in_line = in_file.readline(in_file)
+                in_line = in_file.readline()
                 if not in_line:
                     break
                 data = in_line.split(":")
                 if data[0] == "[productName]":
                     dummy = data[1]
-                    if data[1] == name:
+                    if dummy == name:
                         i += 1
                 if data[0] == "[rating]":
                     if dummy == name:
@@ -30,3 +28,5 @@ class DataSet(object):
             return normalise
         except RuntimeError:
             print("Error at Runtime in Calculating Average")
+
+
