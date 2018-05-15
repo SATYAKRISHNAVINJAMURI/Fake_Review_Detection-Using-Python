@@ -1,16 +1,16 @@
 import re
-import DataSet
-import SWN3
+from DataSet import DataSet
+from SWN3 import SWN3
 import nltk
 
 
-class Main(object):
+class Main:
 	_product_name = ""
 	_review = ""
 	_cal_rating = 0.0
 	_avg_rating = 0.0
 	_review_id = 0
-	_pathtoreviewset = ""
+	_pathtoreviewset = "/home/satya/dm_project/src/data/data1.txt"
 
 	def threshold(self,x,y):
 		value = x-y
@@ -18,9 +18,11 @@ class Main(object):
 			return -value
 		else:
 			return value
-	def main(self):
+	def detect(self):
+		samp = SWN3()
+		ds = DataSet()
 		try:
-			in_file = open(self._pathtoreviewset)
+			in_file = open(self._pathtoreviewset,"r")
 			line = ""
 			while True:
 				in_line = in_file.readline()
@@ -33,27 +35,29 @@ class Main(object):
 					print("\n\n\nFor Review" + review_id)
 				elif data[0] == "[productName]":
 					product_name = data[1]
-				elif data[0] == "[fullText":
+				elif data[0] == "[fullText]":
 					review = data[1]
 					review = review.lower()
-					tokenized = nltk.word_tokenizer(review)
+					tokenized = nltk.word_tokenize(review)
 					tagger = nltk.pos_tag(tokenized)
 					tagged = ""
 					for element in tagger:
 						tagged += " " + element[0] +"/" + element[1]
-					cal_rating = SWN3.classifyreview(tagged)
-					avg_rating = DataSet.calAverageRating(product_name)
-				elif data[0].equals("[rating]"):
-					rating = float(data[1])
-					rating = (((rating/5)*2 )-1)
-					print("Calculated rating: " + cal_rating)
-					print("Average Rating: " + avg_rating)
-					if not self.threshold(avg_rating,cal_rating) < 0.5:
+					cal_rating = samp.classifyreview(tagged)
+					avg_rating = ds.calAverageRating(product_name)
+					print("Calculated rating: " + str(cal_rating))
+					print("Average Rating: " + str(avg_rating))
+					if not self.threshold(avg_rating, cal_rating) < 0.5:
 						print("NOt a Genuine Review.")
 					else:
 						print("Genuine Review")
+
 			in_file.close()
-		except Exception as err:
-			print(str(err))
+		except IOError:
+			print("IOERROR in main")
+
+m = Main()
+m.detect()
+
 
 
