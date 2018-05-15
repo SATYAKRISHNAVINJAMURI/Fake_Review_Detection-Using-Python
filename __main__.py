@@ -22,19 +22,18 @@ class Main:
 		samp = SWN3()
 		ds = DataSet()
 		try:
-			in_file = open(self._pathtoreviewset,"r")
-			line = ""
+			in_file = open(self._pathtoreviewset, "r")
 			while True:
 				in_line = in_file.readline()
 				if not in_line:
 					break
 				data = in_line.split(":")
-				if re.search(data[0],"^#{5}(.*)"):
-					id = line.split("^#{5}")
-					review_id = int(id[1])
-					print("\n\n\nFor Review" + review_id)
+				if re.match("#####", data[0]):
+					id = in_line.split("#####")
+					_review_id = int(id[1])
+					print("\n\n\nFor Review" + str(_review_id))
 				elif data[0] == "[productName]":
-					product_name = data[1]
+					_product_name = data[1]
 				elif data[0] == "[fullText]":
 					review = data[1]
 					review = review.lower()
@@ -43,12 +42,12 @@ class Main:
 					tagged = ""
 					for element in tagger:
 						tagged += " " + element[0] +"/" + element[1]
-					cal_rating = samp.classifyreview(tagged)
-					avg_rating = ds.calAverageRating(product_name)
-					print("Calculated rating: " + str(cal_rating))
-					print("Average Rating: " + str(avg_rating))
-					if not self.threshold(avg_rating, cal_rating) < 0.5:
-						print("NOt a Genuine Review.")
+					_cal_rating = samp.classifyreview(tagged)
+					_avg_rating = ds.calAverageRating(_product_name)
+					print("Calculated rating: " + str(_cal_rating))
+					print("Average Rating: " + str(_avg_rating))
+					if not self.threshold(_avg_rating, _cal_rating) < 0.5:
+						print("Not a Genuine Review.")
 					else:
 						print("Genuine Review")
 

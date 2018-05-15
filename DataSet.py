@@ -4,7 +4,6 @@ class DataSet:
     def calAverageRating( self ,name):
         normalise = 0.0
         try:
-            name = name + "\n"
             in_file = open(self.__pathtoreviewset,"r")
             line = ""
             i = 0
@@ -28,5 +27,4 @@ class DataSet:
             return normalise
         except RuntimeError:
             print("Error at Runtime in Calculating Average")
-
 
