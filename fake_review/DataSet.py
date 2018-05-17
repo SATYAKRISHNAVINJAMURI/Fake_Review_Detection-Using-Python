@@ -1,16 +1,15 @@
 class DataSet:
-""" This class is defined on the dataSet which requires a dataset
-to be passed as an argument"""
-    def __init__(self,file)
-    __pathtoreviewset =  file
+    """ This class is defined on the dataSet which requires a dataset
+    to be passed as an argument"""
+    
+    def __init__(self, file):
+        self.__path_to_review_set = file
 
-    def calAverageRating( self ,name):
-""" Calculate average rating of that product by adding up all
-the ratings of the product and taking an average"""
-        normalise = 0.0
+    def cal_average_rating(self, name):
+        """ Calculate average rating of that product by adding up all
+        the ratings of the product and taking an average"""
         try:
-            in_file = open(self.__pathtoreviewset,"r")
-            line = ""
+            in_file = open(self.__path_to_review_set, "r")
             i = 0
             dummy = ""
             rating = 0.0
@@ -32,4 +31,3 @@ the ratings of the product and taking an average"""
             return normalise
         except RuntimeError:
             print("Error at Runtime in Calculating Average")
-
