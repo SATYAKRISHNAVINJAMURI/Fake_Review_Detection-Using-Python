@@ -16,7 +16,7 @@ class Detector:
         self.__path_to_review_set = file
 
     @staticmethod
-    def threshold(x, y):
+    def get_difference(x, y):
         """ Returns the magnitude of difference between two values"""
         value = x-y
         if value < 0:
@@ -40,8 +40,8 @@ class Detector:
                 data = in_line.split(":")
                 if re.match("#####", data[0]):
                     id_ = in_line.split("#####")
-                    __review_id = int(id_[1])
-                    print("\n\n\nFor Review" + str(__review_id))
+                    self.__review_id = int(id_[1])
+                    print("\n\n\nFor Review" + str(self.__review_id))
                 elif data[0] == "[productName]":
                     self.__product_name = data[1]
                 elif data[0] == "[fullText]":
@@ -52,11 +52,11 @@ class Detector:
                     tagged = ""
                     for element in tagger:
                         tagged += " " + element[0] + "/" + element[1]
-                    __cal_rating = samp.classify_review(tagged)
-                    __avg_rating = ds.cal_average_rating(self.__product_name)
-                    print("Calculated rating: " + str(__cal_rating))
-                    print("Average Rating: " + str(__avg_rating))
-                    if not self.threshold(__avg_rating, __cal_rating) < 0.5:
+                    self.__cal_rating = samp.calculate_sentiment_score(tagged)
+                    self.__avg_rating = ds.cal_average_rating(self.__product_name)
+                    print("Calculated rating: " + str(self.__cal_rating))
+                    print("Average Rating: " + str(self.__avg_rating))
+                    if not self.get_difference(self.__avg_rating,self. __cal_rating) < 0.5:
                         print("Not a Genuine Review.")
                     else:
                         print("Genuine Review")

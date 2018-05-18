@@ -63,7 +63,7 @@ class SWN3:
             except IOError:
                 print("IOError in SWN3")
 
-    def classify_review(self, tagged):
+    def calculate_sentiment_score(self, tagged):
         """This module help in calculating the Sentimental Score by using the
         Sentiword.net file which is a conventional way to find the sentiment
         score and uses all the words to generate a normalized rating on a scale of -1 to 1"""

@@ -1,1 +1,17 @@
-No changes were made.
+All the basic principles of python were followed.
+All the indentation errors were fixed.
+The IOError is now rectified by adding a resource directory as a package and using package_resource module.
+Redundant code was removed as suggested.
+Reason behind using several String Comparisions:
+	a) As this project is completely based on reading DataSet files, and extracting useful information out of it,
+	   a lot of string comparisions should be made to filter useful data.
+	b) File Sentiword.net in the resources folder is the base file for finding the sentiment score of a review. We
+	   basically get all words into a dictionary (__dict) when a first object was created and use it for calculating
+	   rating for several other reviews.
+
+How to run the program.
+	a) Download the DataSet file from the link give in the README.txt
+	b) You can follow the instructions in the README.txt file.
+
+
+
